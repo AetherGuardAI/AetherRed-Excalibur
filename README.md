@@ -827,10 +827,10 @@ excalibur CLI / API / UI
 
 ## 📄 License
 
-**Proprietary** — © AetherGuard AI. All rights reserved.
+MIT License
 
 <div align="center">
 
-<sub>⚔️ <b>AetherRed — Excalibur™</b> · Attack your AI before attackers do.</sub>
+<sub>⚔️ <b>AetherRed — Excalibur</b> · Attack your AI before attackers do.</sub>
 
 </div>
