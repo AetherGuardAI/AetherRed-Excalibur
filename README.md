@@ -36,6 +36,7 @@ Excalibur is a comprehensive adversarial testing tool for **LLMs, AI agents, and
 - [🚀 Quick Start](#-quick-start)
 - [🎯 Attack Catalog (22 Attacks)](#-attack-catalog-22-attacks)
 - [⚖️ LLM Judge](#️-llm-judge)
+- [🗂️ Datasets & Licensing](#️-datasets--licensing)
 - [📋 Campaign Mode](#-campaign-mode)
 - [📊 Output & Reporting](#-output--reporting)
 - [🌐 API Server](#-api-server)
@@ -60,7 +61,7 @@ Excalibur is a comprehensive adversarial testing tool for **LLMs, AI agents, and
 | 📈 | **AetherGuard Resilience Score** | Proprietary 0–100 composite score across 8 categories |
 | 📐 | **ART-Compatible Metrics** | Industry-standard precision / recall / F1 |
 | 📄 | **Multi-Format Reports** | HTML, PDF, JSON, and SARIF for CI/CD |
-| 🤗 | **HuggingFace Dataset Integration** | Load attack payloads from public datasets (prompt-injection-safety, civil_comments, gretel PII, toxigen) |
+| 🤗 | **Open-Source Dataset Integration** | Optionally augment built-in payloads with public open-source datasets from the HuggingFace Hub |
 | 🧩 | **Plugin Architecture** | Extensible with custom attacks via `@register_attack` |
 | 🖧 | **Three Interfaces** | CLI, REST API, and standalone Web UI |
 
@@ -460,7 +461,7 @@ excalibur run prompt_injection \
   -n 50
 ```
 **ATLAS**: AML.T0051.000 • **Interface**: Black-box • **Category**: Content Safety
-**Dataset**: jayavibhav/prompt-injection-safety
+**Payloads**: Built-in, optionally augmented with open-source datasets
 </details>
 
 <details>
@@ -475,7 +476,7 @@ excalibur run jailbreak_dan \
   -n 40
 ```
 **ATLAS**: AML.T0051.002 • **Interface**: Black-box • **Category**: Content Safety
-**Dataset**: jayavibhav/prompt-injection-safety
+**Payloads**: Built-in, optionally augmented with open-source datasets
 </details>
 
 <details>
@@ -490,7 +491,7 @@ excalibur run pii_phi_leakage \
   -n 30
 ```
 **ATLAS**: AML.T0024.001 • **Interface**: Black-box • **Category**: Content Safety
-**Datasets**: gretelai/gretel-pii-masking-en-v1, gretelai/synthetic_pii_finance_multilingual
+**Payloads**: Built-in, optionally augmented with open-source synthetic-PII datasets
 </details>
 
 <details>
@@ -505,7 +506,7 @@ excalibur run hap_content \
   -n 50
 ```
 **ATLAS**: AML.T0048.001 • **Interface**: Black-box • **Category**: Content Safety
-**Datasets**: google/civil_comments, toxigen/toxigen-data
+**Payloads**: Built-in, optionally augmented with open-source datasets
 </details>
 
 <details>
@@ -520,7 +521,7 @@ excalibur run secrets_leakage \
   -n 40
 ```
 **ATLAS**: AML.T0024.002 • **Interface**: Black-box • **Category**: Content Safety
-**Dataset**: Custom (built-in payloads)
+**Payloads**: Built-in
 </details>
 
 <details>
@@ -535,7 +536,7 @@ excalibur run malicious_content \
   -n 50
 ```
 **ATLAS**: AML.T0048.002 • **Interface**: Black-box • **Category**: Content Safety
-**Dataset**: jayavibhav/prompt-injection-safety
+**Payloads**: Built-in, optionally augmented with open-source datasets
 </details>
 
 ---
@@ -603,6 +604,29 @@ When the judge is disabled or unavailable, all attacks fall back to built-in mul
 - Subtle compliance without explicit harmful keywords
 - Implicit toxicity (coded language, dog whistles)
 - Context-dependent violations
+
+---
+
+## 🗂️ Datasets & Licensing
+
+Several **Content Safety** attacks can optionally augment their built-in payloads with real-world examples from public, **open-source datasets** hosted on the [HuggingFace Hub](https://huggingface.co/datasets). This is **opt-in** — controlled per attack via `use_hf_payloads` (default `false`) — and requires the optional extra:
+
+```bash
+pip install -e ".[datasets]"
+```
+
+When enabled, datasets are **downloaded at runtime** via `datasets.load_dataset()`. Excalibur does **not** bundle or redistribute any dataset content in this repository. If the `datasets` library is not installed, the affected attacks log a warning and fall back to their built-in payloads.
+
+Any dataset used is configurable per attack (via `hf_dataset` / `hf_datasets` params), so you can point each attack at the open-source dataset of your choice. Synthetic (artificially generated) datasets are preferred for PII/PHI testing so that no real personal data is involved.
+
+### Your Responsibilities
+
+- **Verify the license** of any dataset you configure on its source page before use. Licenses differ and some may restrict commercial use or require accepting gated terms.
+- **Prefer synthetic data for PII testing.** Use artificially generated PII rather than any dataset containing real individuals' data.
+- **Payloads leave your environment.** Running attacks sends payloads to your configured target providers (OpenAI, Anthropic, Azure, Bedrock). Review each provider's data-handling policy before testing with sensitive content.
+- **Attribution.** If a dataset's license requires attribution, credit the source in any published results.
+
+> Any external datasets are third-party resources governed by their own terms. AetherGuard AI does not distribute them and is not responsible for their content. Compliance with each dataset's license is the responsibility of the user.
 
 ---
 
