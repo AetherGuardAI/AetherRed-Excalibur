@@ -1,0 +1,71 @@
+site_name: AetherRed - Excalibur
+site_description: AI Red-Teaming & Attack Simulation Platform — A Product of AetherGuard
+site_url: https://aetherred.aetherguard.ai
+docs_dir: docs-site
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    - scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    logo: material/sword
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Attacks:
+    - Overview: attacks/index.md
+    - Adversarial ML: attacks/adversarial-ml.md
+    - NLP & Language: attacks/nlp-language.md
+    - Agent & Trust: attacks/agent-trust.md
+    - RAG & Embedding: attacks/rag-embedding.md
+    - Infrastructure: attacks/infrastructure.md
+    - Model Integrity: attacks/model-integrity.md
+    - Evasion: attacks/evasion.md
+    - Content Safety: attacks/content-safety.md
+  - Campaigns: campaigns.md
+  - CLI Reference: cli.md
+  - REST API: api.md
+  - Reporting & Scoring: reporting.md
+  - Architecture: architecture.md
+  - Extending: extending.md
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/AetherGuardAI
+  generator: false
+
+copyright: "© 2026 AetherGuard AI — AetherRed - Excalibur v1.0.0"

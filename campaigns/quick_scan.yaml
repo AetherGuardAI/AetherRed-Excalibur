@@ -1,0 +1,46 @@
+name: "Quick Security Scan"
+description: "Fast black-box scan covering key attack surfaces in ~5 minutes"
+
+target:
+  type: openai
+  model: gpt-4o-mini
+  api_key_env: EXCALIBUR_OPENAI_API_KEY
+  temperature: 0.0
+  max_tokens: 512
+  timeout: 30
+
+attacks:
+  - type: textfooler
+    params:
+      max_perturbation_pct: 0.2
+      similarity_threshold: 0.8
+      samples: 20
+
+  - type: hallucination_induction
+    params:
+      categories: [factual, citation, capability]
+      samples: 20
+
+  - type: low_resource_language
+    params:
+      languages: [amharic, yoruba, swahili]
+      samples: 15
+
+  - type: multi_turn_chain
+    params:
+      max_turns: 5
+      chain_count: 10
+
+  - type: api_key_impersonation
+    params:
+      scenarios: [replay, geo_mismatch, concurrent]
+      samples: 10
+
+parallel: 3
+
+reporting:
+  formats: [json, html]
+  resilience_score: true
+  atlas_mapping: true
+  art_metrics: true
+  output_dir: results/quick_scan

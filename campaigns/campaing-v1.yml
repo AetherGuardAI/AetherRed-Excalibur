@@ -1,0 +1,38 @@
+name: "Custom Red Team"
+target:
+  type: openai
+  model: gpt-4o
+  api_key_env: EXCALIBUR_OPENAI_API_KEY
+
+judge:
+  enabled: true
+  provider: anthropic          # or anthropic
+  model: claude-sonnet-4-6            # strong model for evaluation
+  api_key_env: EXCALIBUR_JUDGE_API_KEY
+
+attacks:
+  - type: textfooler
+    params: { samples: 50, max_perturbation_pct: 0.15 }
+  - type: hallucination_induction
+    params: { samples: 15, categories: [factual, citation] }
+  - type: multi_turn_chain
+    params: { chain_count: 20, templates: [dan, aim] }
+  - type: maic
+    params: { topology: star_4_agent, propagation_hops: 3 }
+  - type: cross_trust
+    params: { scenarios: [privilege_escalation, confused_deputy] }
+  - type: low_resource_language
+    params: {
+      languages: [amharic,yoruba,swahili,burmese,khmer,georgian],
+      attack_types: [translation, code_switch, transliteration],
+      harmful_categories: [violence, illegal_activity, hate_speech],
+      samples: 15
+      }
+
+
+parallel: 3
+
+reporting:
+  formats: [json, html, sarif]
+  resilience_score: true
+  atlas_mapping: true
