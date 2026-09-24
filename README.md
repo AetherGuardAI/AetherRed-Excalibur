@@ -2,7 +2,7 @@
 
 <img width="120" height="120" alt="AetherGuard Security Logo" src="https://github.com/user-attachments/assets/0d5b299d-c9e9-4024-9356-25216f9740ca" />
 
-# ⚔️ AetherRed — Excalibur™
+# ⚔️ AetherRed — Excalibur
 
 **AI Red-Teaming & Attack Simulation Platform**
 
